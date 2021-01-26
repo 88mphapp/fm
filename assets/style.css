@@ -1,0 +1,230 @@
+@font-face {
+    font-family:Glass TTY VT220;
+    src:url(Glass_TTY_VT220.60f65041b7228cef8385.ttf);
+    src:url(Glass_TTY_VT220.60f65041b7228cef8385.ttf) format("truetype")
+   }
+
+body {
+    background-color: #000;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+}
+#container {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+}
+.txt1 {
+    color: #ffe0b2;
+    text-shadow: 0 0 3px #ffe0b2,0 0 10px #ffb74d,0 0 20px #fb8c00,0 0 30px #f57c00;
+    font-family: Glass TTY VT220,sans-serif;
+    font-weight: 500;
+}
+#logo {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    z-index: 100;
+}
+#logo img {
+    width:100px;
+}
+#data {
+    width: 30%;
+    position: absolute;
+    left: 150px;
+    top:30px;
+}
+#scene {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    position: absolute;
+    z-index: 0;
+}
+#scene video {
+    height: 100%;
+    right: 0;
+    object-fit: cover;
+    position: absolute;
+    top: 0;
+    width: 100%;
+}
+#speed {
+    position: absolute;
+    top:-10px;
+    right:0px;
+    background-image: url("speed.png");
+    background-size: 100%;
+    width:40vw;
+    max-width: 250px;
+}
+#speed img {
+    transition: transform 3s ease-in-out;  
+    width: 100%;   
+}
+#speed_meter {
+    position: absolute;
+    bottom: 70px;
+    right: 50px;
+    font-size: 38px;
+
+
+}
+
+#radio {
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+    height:70px;
+}
+.nftlink {
+    position: absolute;
+    right: 20px;
+    bottom: 20px;
+    font-size: 32px;
+}
+@media only screen and (orientation:portrait){
+    #content {
+        display: none;
+    }
+    #landscapewarning {
+        display: block;
+    }
+}
+@media only screen and (orientation:landscape){
+    #content {
+        display: block;
+    }
+    #landscapewarning {
+        display: none;
+    }
+}
+
+@import url(https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css);
+
+.radioco-playButton-playing:before{
+  content: url(play_bt.png);
+  cursor: pointer;
+}
+
+.radioco-playButton-paused:before{
+  content:url(pause_bt.png);
+  cursor: pointer;
+}
+
+.radioco-playButton{
+
+  color: #273f4c;
+  position: relative;
+  text-align: left;
+  position: relative;
+  z-index: 2;
+  font-size:50px;
+}
+
+.radioco-playButton:active{
+  color:#39596b;
+}
+
+.radioco-playButton-playing{
+  font-family: "controls";
+  position: absolute;
+}
+
+.radioco-playButton-paused{
+  font-family: "controls";
+  position: absolute;
+}
+
+.radioco-information{
+  display: block;
+  position: relative;
+  width: 340px;
+  color:#fff;
+  z-index: 1;
+  float: right;
+  top:13px;
+}
+.radioco-nowPlaying {
+    color: #ffe0b2;
+    text-shadow: 0 0 3px #ffe0b2,0 0 10px #ffb74d,0 0 20px #fb8c00,0 0 30px #f57c00;
+    font-family: Glass TTY VT220,sans-serif;
+    font-weight: 500;
+    margin-left: 70px;
+    position: absolute;
+    width: 400px;
+    bottom: 20px;
+
+}
+
+
+/* LOADER */
+#sun_container {
+    position: relative;
+height: 30vw;
+width: 30vw;
+overflow: hidden;
+margin-left:auto;
+margin-right: auto;
+
+}
+.sun {
+    position: absolute;
+top: 0;
+left: 50%;
+transform: translate(-50%,0);
+width: 30vw;
+height: 30vw;
+background: radial-gradient(transparent 65%,#ff0488 100%),linear-gradient(#ffcb55 0,#ff0488 100%);
+border-radius: 50%;
+-webkit-animation: hue-rotate 60s ease-in-out infinite 5s;
+animation: hue-rotate 60s ease-in-out infinite 5s;
+}
+.band {
+    position: absolute;
+    bottom: -6vw;
+    width: 100%;
+    height: 10%;
+    background: #000;
+    -webkit-animation: wave 10s linear infinite;
+    animation: wave 10s linear infinite;
+        animation-delay: 0s;
+}
+@-webkit-keyframes wave {
+    0% {
+     transform:translateY(0) scaleY(1)
+    }
+    100% {
+     transform:translateY(-24vw) scaleY(0)
+    }
+   }
+   @keyframes wave {
+    0% {
+     transform:translateY(0) scaleY(1)
+    }
+    100% {
+     transform:translateY(-24vw) scaleY(0)
+    }
+   }
+   @-webkit-keyframes hue-rotate {
+    0% {
+     -webkit-filter:hue-rotate(360deg);
+     filter:hue-rotate(360deg)
+    }
+    100% {
+     -webkit-filter:hue-rotate(0);
+     filter:hue-rotate(0)
+    }
+   }
+   @keyframes hue-rotate {
+    0% {
+     -webkit-filter:hue-rotate(360deg);
+     filter:hue-rotate(360deg)
+    }
+    100% {
+     -webkit-filter:hue-rotate(0);
+     filter:hue-rotate(0)
+    }
+   }

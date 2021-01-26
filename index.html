@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<title>88Radio by 88MPH</title>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+        <link type="text/css" rel="stylesheet" href="assets/style.css">
+        <script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+    <script src="https://public.radio.co/playerapi/jquery.radiocoplayer.min.js"></script>
+       
+	</head>
+
+	<body>
+
+        <!-- PRELOADER -->
+        <div class="preloader" style="width:100vw;
+        height:100vh;
+        padding-top:10vh;
+        background-color: #000;
+        text-align: center;
+        z-index: 500;
+        position: absolute;">
+        <h3 class="txt1">Loading...</h3>
+            <div id="sun_container">
+                <div class="sun"></div>
+                <div class="band" style="animation-delay: -0s"></div>
+                <div class="band" style="animation-delay: -1s"></div>
+                <div class="band" style="animation-delay: -2s"></div>
+                <div class="band" style="animation-delay: -3s"></div>
+                <div class="band" style="animation-delay: -4s"></div>
+                <div class="band" style="animation-delay: -5s"></div>
+                <div class="band" style="animation-delay: -6s"></div>
+                <div class="band" style="animation-delay: -7s"></div>
+                <div class="band" style="animation-delay: -8s"></div>
+                <div class="band" style="animation-delay: -9s"></div>
+            </div>
+        </div>
+        <!-- //PRELOADER -->
+
+        <div id="landscapewarning">
+            <!-- LANDSCAPE ONLY -->
+            <div style="width:100vw;
+            height:100vh;
+            background-color: #000;
+            text-align: center;
+            z-index: 500;
+            position: absolute;">
+                <h2 style="color:#fff; margin-top:45vh" class="txt1">This page only viewed on landscape mode. Turn your device.</h2>
+            </div>
+            <!-- //LANDSCAPE ONLY -->
+
+        </div>
+
+        
+        <div id="container">
+            
+
+            <div id="scene">
+                <video id="video" muted autoplay loop>
+                    <source src="assets/scene_webm2.webm" type="video/webm"> 
+                    <source src="assets/scene.mp4" type="video/mp4">       
+                        
+                  </video>
+            </div>
+
+            <a id="logo" href="https://88mph.app"><img src="assets/logo.png"></a>
+
+            <div id="data" class="txt1">
+                TVL: <span id="d_tvl"></span> <br>
+                <!-- Liquidity: <span id="d_liq"></span><br> -->
+                MPH: <span id="d_mpg"></span>
+
+            </div>
+
+            <div id="speed">
+                <span id="speed_meter" class="txt1">0</span>
+                <img class="speed_marker" src="assets/speed_marker.png">
+             </div>
+
+             <div id="radio">
+                <!-- <script src="https://embed.radio.co/player/4755948.js"></script> -->
+                <span class="radioplayer"
+                    data-src="http://s3.radio.co/s4358eb178/listen"
+                    data-playbutton="true"
+                    data-volumeslider="false"
+                    data-elapsedtime="false"
+
+                    data-nowplaying="true"
+                    data-showplayer="false"></span>
+             </div>
+
+
+             <a href="#" target="_blank" class="nftlink txt1">NFT</a>
+            
+        </div>       
+
+
+
+        <script>
+            
+            //preloader
+            window.onload = function(){ 
+                document.querySelector(".preloader").style.display = "none"; 
+            }
+
+            function load_data() {
+
+                //MPH price
+                const fetchPRICE = 'https://api.coingecko.com/api/v3/simple/price?ids=88mph&vs_currencies=usd';
+                fetch(fetchPRICE)
+                    .then(function(response){
+                        response.json().then(function(data){
+                            
+                            document.getElementById("d_mpg").innerHTML = '$' + data['88mph']['usd'];                     
+                        });
+                    })                 
+                    .catch(function(err){ 
+                    console.error('Failed retrieving information', err);
+                    });
+
+
+                //TVL
+                const fetchTVL = 'https://api.88mph.app/pools';
+                fetch(fetchTVL)
+                    .then(function(response){
+                        response.json().then(function(data){
+
+                            var target_tvl = 88000000;
+                            var total_tvl = data.map(bill => parseFloat(bill.totalValueLockedInUSD)).reduce((acc, bill) => bill + acc);
+                            total_tvl_formated = parseFloat(total_tvl).toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                            document.getElementById("d_tvl").innerHTML = '$' + total_tvl_formated;
+                            
+
+                            //Rotate Speed Marker
+                            var rotation = (total_tvl/1000000) * 1.72;
+                            document.querySelector(".speed_marker").style.transform = "rotate("+rotation+"deg)";
+                            
+                                                    
+                            //Set Speed Meter                            
+                            var speed = Math.round(total_tvl/1000000);
+                            var i = 0;
+                            var inv = setInterval(function() {     
+                                if(i <= speed) {                                   
+                                    document.getElementById("speed_meter").innerHTML = i++;
+                                } else {
+                                    clearInterval(inv);
+                                }
+                            }, 2000 / speed);
+
+
+                            //Video Playback Rate
+                            var video = document.getElementById("video");
+                            video.playbackRate = speed * 0.035;  
+                            
+                        });
+                    })                 
+                    .catch(function(err){ 
+                    console.error('Failed retrieving information', err);
+                    });
+
+            } //end load_data
+
+            load_data();
+
+        </script>
+
+    </body>
+    
+    <script>
+        //initialise the plugin with the element
+        $('.radioplayer').radiocoPlayer();
+        
+        </script>
+
+</html>
