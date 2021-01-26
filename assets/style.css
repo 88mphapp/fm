@@ -16,25 +16,30 @@ body {
     margin: 0;
 }
 .txt1 {
+    font-size: x-large;
     color: #ffe0b2;
     text-shadow: 0 0 3px #ffe0b2,0 0 10px #ffb74d,0 0 20px #fb8c00,0 0 30px #f57c00;
     font-family: Glass TTY VT220,sans-serif;
     font-weight: 500;
 }
+.glowing{
+    box-shadow: 0 0 3px #ffe0b2,0 0 10px #ffb74d,0 0 20px #fb8c00,0 0 30px #f57c00;
+}
 #logo {
     position: absolute;
-    top: 20px;
-    left: 20px;
+    top: 24px;
+    left: 24px;
     z-index: 100;
 }
 #logo img {
-    width:100px;
+    width: 188px;
+    margin: -55px;
 }
 #data {
-    width: 30%;
+    width: auto;
     position: absolute;
-    left: 150px;
-    top:30px;
+    left: 118px;
+    top: 30px;
 }
 #scene {
     width: 100%;
@@ -53,8 +58,8 @@ body {
 }
 #speed {
     position: absolute;
-    top:-10px;
-    right:0px;
+    top:0px;
+    right:8px;
     background-image: url("speed.png");
     background-size: 100%;
     width:40vw;
@@ -75,15 +80,16 @@ body {
 
 #radio {
     position: absolute;
-    bottom: 10px;
-    left: 10px;
-    height:70px;
+    bottom: 24px;
+    left: 24px;
+    height:48px;
 }
 .nftlink {
     position: absolute;
-    right: 20px;
-    bottom: 20px;
-    font-size: 32px;
+    right: 24px;
+    bottom: 24px;
+    font-size: x-large;
+    text-decoration: none;
 }
 @media only screen and (orientation:portrait){
     #content {
@@ -105,12 +111,12 @@ body {
 @import url(https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css);
 
 .radioco-playButton-playing:before{
-  content: url(play_bt.png);
+  content: url(play_arrow-48px.svg);
   cursor: pointer;
 }
 
 .radioco-playButton-paused:before{
-  content:url(pause_bt.png);
+  content:url(eject-48px.svg);
   cursor: pointer;
 }
 
@@ -152,10 +158,11 @@ body {
     text-shadow: 0 0 3px #ffe0b2,0 0 10px #ffb74d,0 0 20px #fb8c00,0 0 30px #f57c00;
     font-family: Glass TTY VT220,sans-serif;
     font-weight: 500;
-    margin-left: 70px;
+    margin-left: 62px;
     position: absolute;
-    width: 400px;
-    bottom: 20px;
+    width: 520px;
+    bottom: 10px;
+    font-size: x-large;
 
 }
 
