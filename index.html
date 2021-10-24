@@ -130,44 +130,47 @@
                     });
 
 
-                //TVL
-                const fetchTVL = 'https://api.88mph.app/pools';
-                fetch(fetchTVL)
-                    .then(function(response){
-                        response.json().then(function(data){
+                //TVL NEW
+                Promise.all([
+                    fetch('https://api.88mph.app/v2/pools').then(resp => resp.json()),
+                    fetch('https://api.88mph.app/v3/pools').then(resp => resp.json()),
+                    fetch('https://api.88mph.app/v3/polygon/pools').then(resp => resp.json()),
+                    fetch('https://api.88mph.app/v3/avalanche/pools').then(resp => resp.json()),
+                    fetch('https://api.88mph.app/v3/fantom/pools').then(resp => resp.json())
+                ]).then(results => {
+                    var total_tvl = 0;
+                    results.forEach(function(item){
+                        total_tvl += item.map(bill => parseFloat(bill.totalValueLockedInUSD)).reduce((acc, bill) => bill + acc);
+                    })
+                    var total_tvl_formated = parseFloat(total_tvl).toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                    document.getElementById("d_tvl").innerHTML = '$' + total_tvl_formated;
+                        
 
-                            var target_tvl = 88000000;
-                            var total_tvl = data.map(bill => parseFloat(bill.totalValueLockedInUSD)).reduce((acc, bill) => bill + acc);
-                            total_tvl_formated = parseFloat(total_tvl).toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-                            document.getElementById("d_tvl").innerHTML = '$' + total_tvl_formated;
-                            
-
-                            //Rotate Speed Marker
-                            var rotation = (total_tvl/1000000) * 1.72;
-                            document.querySelector(".speed_marker").style.transform = "rotate("+rotation+"deg)";
-                            
-                                                    
-                            //Set Speed Meter                            
-                            var speed = Math.round(total_tvl/1000000);
-                            var i = 0;
-                            var inv = setInterval(function() {     
-                                if(i <= speed) {                                   
-                                    document.getElementById("speed_meter").innerHTML = i++;
-                                } else {
-                                    clearInterval(inv);
-                                }
-                            }, 2000 / speed);
+                    //Rotate Speed Marker
+                    var rotation = (total_tvl/1000000) * 1.72;
+                    document.querySelector(".speed_marker").style.transform = "rotate("+rotation+"deg)";
+                    
+                                            
+                    //Set Speed Meter                            
+                    var speed = Math.round(total_tvl/1000000);
+                    var i = 0;
+                    var inv = setInterval(function() {     
+                        if(i <= speed) {                                   
+                            document.getElementById("speed_meter").innerHTML = i++;
+                        } else {
+                            clearInterval(inv);
+                        }
+                    }, 2000 / speed);
 
 
-                            //Video Playback Rate
-                            var video = document.getElementById("video");
-                            video.playbackRate = speed * 0.035;  
-                            
-                        });
-                    })                 
-                    .catch(function(err){ 
+                    //Video Playback Rate
+                    var video = document.getElementById("video");
+                    video.playbackRate = speed * 0.035;  
+                    console.log(total_tvl_formated);
+                })
+                .catch(function(err){ 
                     console.error('Failed retrieving information', err);
-                    });
+                });
 
             } //end load_data
 
